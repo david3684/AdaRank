@@ -9,11 +9,11 @@ _Model merging has emerged as a promising approach for unifying independently fi
 
 ## Preparation
 ### Install Dependencies
-Install the required dependencies:
+Install the required dependencies(Python 3.8+ recommended):
 ```bash
 pip install -r requirements.txt
 ```
-**Note**: Some datasets require a Kaggle API key for loading. Please add your Kaggle API key to the `~/.kaggle/` folder. Refer to the [Kaggle API documentation](https://www.kaggle.com/docs/api) for instructions on obtaining and setting up your API key.
+**Note**: This codebase is based on PyTorch 2.2.1 and CUDA 12.1. Ensure your environment meets these requirements for compatibility. Some datasets require a Kaggle API key for loading. Please add your Kaggle API key to the `~/.kaggle/` folder. Refer to the [Kaggle API documentation](https://www.kaggle.com/docs/api) for instructions on obtaining and setting up your API key.
 
 ---
 ### Datasets
@@ -64,7 +64,7 @@ Run experiments for merging 8, 14, or 20 tasks with ViT-B/32 or ViT-L/14 backbon
   ```bash
   python ./vision/main.py config_list_path="./configs/adarank_{B or L}_T20/adarank_{TA or CART}.yaml"
   ```
-
+We provide options for two baseline methods, Task Arithmetic(TA) and [CART](https://arxiv.org/abs/2412.12153).
 ### Language Model Merging
 
 Run experiments for merging 7 tasks:
