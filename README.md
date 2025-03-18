@@ -1,4 +1,8 @@
-##  Codebase for ICCV sumission "AdaRank: Adaptive Rank Pruning for Enhanced Model Merging"
+## AdaRank: Adaptive Rank Pruning for Enhanced Model Merging
+![Image](https://github.com/user-attachments/assets/96fff66d-99d0-408a-a371-7fe309fab7a2)
+---
+This is a repository for codes of paper AdaRank: Adaptive Rank Pruning for Enhanced Model Merging.
+
 ### Preparing Datasets and Checkpoints
 #### Datasets: 
 Vision Datasets
