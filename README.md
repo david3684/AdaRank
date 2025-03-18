@@ -1,5 +1,5 @@
 # AdaRank: Adaptive Rank Pruning for Enhanced Model Merging
-This is a repository for codes of paper **AdaRank: Adaptive Rank Pruning for Enhanced Model Merging.**
+This is a repository for paper **AdaRank: Adaptive Rank Pruning for Enhanced Model Merging.**
 
 ![Image](https://github.com/user-attachments/assets/96fff66d-99d0-408a-a371-7fe309fab7a2)
 ## Abstract
