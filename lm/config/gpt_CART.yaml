@@ -1,0 +1,29 @@
+decompose: encoder
+eval_batch_size: 96
+
+exclude_param_names_regex:
+- classifier
+merge_backbone: gpt2
+merge_coeff: 1.3
+merge_method: cart
+merge_rank_ratio: 0.01
+
+tasks:
+- cola
+- sst2
+- mrpc
+- qqp
+- mnli
+- qnli
+- rte
+
+initial_rank_ratio: 0.01
+prior: 1.3
+mask_temp: 10
+device: "cuda:0"
+lr: 0.00005
+tta_batch_size: 8
+tta_eval_interval: 500
+tta_steps: 5000
+skip_first_eval: false
+do_adaptive_merging: true

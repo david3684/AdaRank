@@ -1,0 +1,29 @@
+decompose: "encoder"
+eval_batch_size: 256
+
+exclude_param_names_regex:
+- classifier
+merge_backbone: roberta-base
+merge_coeff: 0.3
+merge_method: TA
+merge_rank_ratio: 1.0
+
+tasks:
+- cola
+- sst2
+- mrpc
+- qqp
+- mnli
+- qnli
+- rte
+
+initial_rank_ratio: 1.0
+prior: 0.3
+mask_temp: 10
+device: "cuda"
+lr: 0.00005
+tta_batch_size: 8
+tta_eval_interval: 500
+tta_steps: 5000
+skip_first_eval: false
+do_adaptive_merging: true

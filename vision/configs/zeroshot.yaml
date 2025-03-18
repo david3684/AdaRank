@@ -1,0 +1,31 @@
+model: ViT-B-32
+
+data_location: "/workspace/dataset/"  
+weight_root: "/workspace/weight/checkpoints/ViT-B-32"  
+save: "/workspace/weight/checkpoints/ViT-B-32"  
+openclip_cachedir: "/workspace/weight/checkpoints/ViT-B-32" 
+TA_MODE: True
+device: auto
+tasks:
+- Cars
+- DTD
+- EuroSAT
+- GTSRB
+- MNIST
+- RESISC45
+- SUN397
+- SVHN
+- CIFAR100
+- STL10
+- Flowers102
+- OxfordIIITPet
+- PCAM
+- FER2013
+- EMNIST
+- CIFAR10
+- Food101
+- FashionMNIST
+- RenderedSST2
+- KMNIST
+merge_type: static
+merge_method: zeroshot

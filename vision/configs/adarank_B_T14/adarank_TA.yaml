@@ -1,0 +1,42 @@
+merge_type: adaptive
+merge_method: TA
+
+prior: 0.3
+mask_temp: 10
+
+data_location: "/data1/common_datasets/vision_cls"  
+weight_root: "/data1/common_datasets/shared_weight/ViT-B-32" 
+save: "/data1/common_datasets/shared_weight/ViT-B-32"  
+openclip_cachedir: "/data1/common_datasets/shared_weight/ViT-B-32"
+
+initial_rank_ratio: 1.0
+extend_clamp: false
+clamp_weights: false
+TA_MODE: True
+tasks:  
+  - "Cars"
+  - "DTD"
+  - "EuroSAT"
+  - "GTSRB"
+  - "MNIST"
+  - "RESISC45"
+  - "SUN397"
+  - "SVHN"
+  - "CIFAR100"
+  - "STL10"
+  - "Flowers102"
+  - "OxfordIIITPet"
+  - "PCAM"
+  - "FER2013"
+  # - "EMNIST"
+  # - "CIFAR10"
+  # - "Food101"
+  # - "FashionMNIST"
+  # - "RenderedSST2"
+  # - "KMNIST"
+
+
+tta_batch_size: 16
+tta_eval_interval: 500
+tta_steps: 10000
+

@@ -1,0 +1,65 @@
+# Hydra Default Configuration
+hydra:
+  run:
+    dir: .
+
+config_list_path: ./configs/experiments 
+do_parallel: false
+
+# Model Configuration
+model: "ViT-B-32"  
+pretrained_model: "openai"  
+
+# Data Path Configuration
+data_location: "/data1/common_datasets/vision_cls"  
+weight_root: "/data1/common_datasets/shared_weight/ViT-B-32"  
+save: "/data1/common_datasets/shared_weight/ViT-B-32"  
+openclip_cachedir: "/data1/common_datasets/shared_weight/ViT-B-32"  
+device: "auto"
+
+# Experiment Configuration
+tasks: 
+  - Cars
+  - DTD
+  - EuroSAT
+  - GTSRB
+  - MNIST
+  - RESISC45
+  - SUN397
+  - SVHN
+  # - CIFAR100
+  # - STL10
+  # - Flowers102
+  # - OxfordIIITPet
+  # - PCAM
+  # - FER2013
+  # - EMNIST
+  # - CIFAR10
+  # - Food101
+  # - FashionMNIST
+  # - RenderedSST2
+  # - KMNIST
+
+merge_type: "adaptive"
+merge_method: "CART"
+
+eval_batch_size: 128
+
+initial_rank_ratio: 1.0
+
+# TTA Configuration
+tta_batch_size: 16
+tta_eval_interval: 1000
+tta_steps: 10000
+lr: 1e-3
+prior: 1.0
+test_data_ratio: 1
+
+soft_mask: false
+mask_temp: 1
+normalized_merging_weights: false
+clamp_weights: false
+extend_clamp: false  
+
+TA_MODE: True
+

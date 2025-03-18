@@ -1,0 +1,54 @@
+
+model: "ViT-L-14"  # Model Architecture
+
+merge_type: adaptive
+merge_method: TA
+
+prior: 0.3
+mask_temp: 10
+
+
+initial_rank_ratio: 1.0
+data_location: "/data1/common_datasets/vision_cls"  
+weight_root: "/data1/common_datasets/shared_weight/ViT-B-32" 
+save: "/data1/common_datasets/shared_weight/ViT-B-32"  
+openclip_cachedir: "/data1/common_datasets/shared_weight/ViT-B-32"
+extend_clamp: false
+clamp_weights: false
+
+tasks:  
+- Cars
+- DTD
+- EuroSAT
+- GTSRB
+- MNIST
+- RESISC45
+- SUN397
+- SVHN
+- CIFAR100
+- STL10
+- Flowers102
+- OxfordIIITPet
+- PCAM
+- FER2013
+# - EMNIST
+# - CIFAR10
+# - Food101
+# - FashionMNIST
+# - RenderedSST2
+# - KMNIST
+
+regularization: true
+regularization_lambda: 0.5
+accumulation_steps: 1
+tta_batch_size: 2
+eval_batch_size: 32
+tta_eval_interval: 1000
+tta_steps: 100000
+
+skip_first_eval: true
+cpu_prefer: true
+cpu_prefer_more: true
+half_precision: true
+low_adam: true
+grad_checkpointing: true

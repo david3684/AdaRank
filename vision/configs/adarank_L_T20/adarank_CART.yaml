@@ -1,0 +1,44 @@
+model: "ViT-L-14"  # Model Architecture
+
+merge_type: adaptive
+merge_method: CART
+
+prior: 1.0
+mask_temp: 10
+
+TA_MODE: True
+initial_rank_ratio: 0.16
+data_location: "/root/data/workspace/data"  
+weight_root: "/root/weight/ViT-L-14" 
+save: "/root/weight/ViT-L-14"  
+openclip_cachedir: "/root/weight/ViT-L-14"
+
+extend_clamp: false
+clamp_weights: false
+
+tasks:  
+- Cars
+- DTD
+- EuroSAT
+- GTSRB
+- MNIST
+- RESISC45
+- SUN397
+- SVHN
+- CIFAR100
+- STL10
+- Flowers102
+- OxfordIIITPet
+- PCAM
+- FER2013
+- EMNIST
+- CIFAR10
+- Food101
+- FashionMNIST
+- RenderedSST2
+- KMNIST
+
+tta_batch_size: 2
+eval_batch_size: 32
+tta_eval_interval: 2000
+tta_steps: 100000
