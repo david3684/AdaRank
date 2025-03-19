@@ -88,5 +88,4 @@ If you use this code in your research, we would be grateful to cite our paper:
 
 ## Acknowledgement
 This repository is built upon codebase of [Task Arithmetic](https://github.com/mlfoundations/task_vectors), [AdaMerging](https://github.com/EnnengYang/AdaMerging), and [EMR-Merging](https://github.com/harveyhuang18/EMR_Merging) (especially for language model experiments). Thanks to the authors for sharing their work.
-```
 
