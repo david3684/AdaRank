@@ -33,14 +33,17 @@ Refer to [DARE](https://github.com/yule-BUAA/MergeLM) & [EMR-Merging](https://gi
 **Language Models**:
   - RoBERTa: [vanillaOVO/roberta_base_glue_ckpts](https://huggingface.co/vanillaOVO/roberta_base_glue_ckpts/tree/main).
   - GPT-2: [tanganke/gpt-2-models](https://huggingface.co/collections/tanganke/gpt-2-models-fine-tuned-on-tasks-from-glue-benchmark-664ab37d9e33e622679f541b).
-    -  **Note**: Update `weight_dir` in `utils/load_config.py` to your checkpoint directory, and download the checkpoints under this directory. The folder should look like below:
-```
-your_folder_name (weight_dir)
+    -  **Note**: Update `weight_dir` in `utils/load_config.py` to your directory, and download the checkpoints under this directory. The folder should look like below:
+```bash
+your_directory (weight_dir)
 ├── roberta
-│   └── ...
+│   ├── cola
+│   ├── mnli
+│   ├── ...
 └── gpt2
-    └── ...
-
+    ├── gpt2_cola
+    ├── gpt2_mnli
+    ├── ...
 ``` 
 ## Running Experiments
 ### Vision Model Merging
