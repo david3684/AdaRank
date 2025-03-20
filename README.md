@@ -29,7 +29,22 @@ Refer to [DARE](https://github.com/yule-BUAA/MergeLM) & [EMR-Merging](https://gi
 **Vision Experiments**:
   - 8 Tasks: Refer to [Editing Models with Task Arithmetic](https://github.com/mlfoundations/task_vectors).
   - 14/20 Tasks: Refer to [TALL-Masks](https://github.com/nik-dim/tall_masks).
-
+  - Place your checkpoints as below:
+```bash
+your_directory
+├── ViT-B-32_TA # 8 task checkpoints from Task Arithmetic authors
+│   ├── cola
+│   ├── mnli
+│   ├── ...
+├── ViT-B-32 # 20 task checkpoints from TALL_MASKS authors
+│    ├── gpt2_cola
+│    ├── gpt2_mnli
+│    ├── ...
+├── ViT-L-14_TA
+└── ViT-L-14
+```
+  - Since checkpoints for 8 tasks (Cars, DTD, EuroSAT, SVHN, SUN397, MNIST, RESISC45, GTSRB) are differently finetuned from each source, we provide options for benchmarks. If you set `TA_MODE=True` in the exp config, it will automatically fetch 8 tasks checkpoints from `ViT-{B or L}-{32 or 14}_TA` folder and use them for 8 tasks evaluation. If you set `False`, all checkpoints from TALL-Masks are used.
+  - 
 **Language Models**:
   - RoBERTa: [vanillaOVO/roberta_base_glue_ckpts](https://huggingface.co/vanillaOVO/roberta_base_glue_ckpts/tree/main).
   - GPT-2: [tanganke/gpt-2-models](https://huggingface.co/collections/tanganke/gpt-2-models-fine-tuned-on-tasks-from-glue-benchmark-664ab37d9e33e622679f541b).
