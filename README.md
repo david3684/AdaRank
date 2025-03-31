@@ -1,5 +1,5 @@
 # AdaRank: Adaptive Rank Pruning for Enhanced Model Merging
-This is a repository for paper **AdaRank: Adaptive Rank Pruning for Enhanced Model Merging.** (Paper will be arxived within few days.)
+This is a repository for paper **[AdaRank: Adaptive Rank Pruning for Enhanced Model Merging](https://arxiv.org/abs/2503.22178).** (Paper will be arxived within few days.)
 
 ![Image](https://github.com/user-attachments/assets/96fff66d-99d0-408a-a371-7fe309fab7a2)
 ## Abstract
@@ -108,7 +108,15 @@ Run experiments for merging 7 tasks:
 If you use this code in your research, we would be grateful to cite our paper:
 
 ```bibtex
-[To be added once the paper is published]
+[@misc{lee2025adarankadaptiverankpruning,
+      title={AdaRank: Adaptive Rank Pruning for Enhanced Model Merging}, 
+      author={Chanhyuk Lee and Jiho Choi and Chanryeol Lee and Donggyun Kim and Seunghoon Hong},
+      year={2025},
+      eprint={2503.22178},
+      archivePrefix={arXiv},
+      primaryClass={cs.LG},
+      url={https://arxiv.org/abs/2503.22178}, 
+}]
 ```
 
 ## Acknowledgement
