@@ -8,7 +8,7 @@ from transformers import (
     default_data_collator,
     AutoConfig
 )
-from utils.load_config import cache_dir, weight_dir
+from utils.load_config import cache_dir
 from tqdm import tqdm
 from datasets import load_dataset, load_from_disk
 import torch.optim as optim
@@ -37,7 +37,7 @@ dataset_names = ["cola", "sst2", "mrpc", "qqp", "mnli", "qnli", "rte"]
 MODEL_NAME = "gpt2"
 GPT_CLSs = "avg"
 CPU_DEVICE: str = "cpu"
-WEIGHT_DIR: str = weight_dir + "gpt2"
+WEIGHT_DIR: str = "/data1/common_datasets/merge_vision_weight/checkpoints/lm/gpt2"
 
 
 def run_block(args: argparse.Namespace, merge_config: DictConfig):
