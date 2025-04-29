@@ -201,12 +201,20 @@ def adaptive_merge_and_eval(config, device):
         task_vectors=ret["task_vectors"],
     ).to(device)
     
-    optimizer = optim.Adam(
-        filter(lambda p: p.requires_grad, adaptive_model.parameters()),
-        lr=config.lr,
-        betas=(0.9, 0.999),
-        weight_decay=0.0,
-    )
+    if config.use_8bit_adam:
+        optimizer = Adam8bit(
+            filter(lambda p: p.requires_grad, adaptive_model.parameters()),
+            lr=config.lr,
+            betas=(0.9, 0.999),
+            weight_decay=0.0,
+        )
+    else:
+        optimizer = optim.Adam(
+            filter(lambda p: p.requires_grad, adaptive_model.parameters()),
+            lr=config.lr,
+            betas=(0.9, 0.999),
+            weight_decay=0.0,
+        )
 
     logging.info("Preparing DataLoaders...")
     tta_dataloaders = []
@@ -232,6 +240,9 @@ def adaptive_merge_and_eval(config, device):
     tta_dataloader_iters = [iter(dl) for dl in tta_dataloaders]
     tqdm_iterator = tqdm(range(config.tta_steps), desc="TTA steps", dynamic_ncols=True)
 
+    if config.half_precision:
+        scaler = GradScaler()
+        
     best_acc = -1.0
     best_task_accuracies = None
     avg_acc, task_accuracies = get_results(adaptive_model, config)
@@ -241,35 +252,69 @@ def adaptive_merge_and_eval(config, device):
         
     for step in tqdm_iterator:
         adaptive_model.reset_merged_state()
-        optimizer.zero_grad()
-        loss_dict = {}
-        losses = 0.0
-        losses_log = {}
-        for idx, task in enumerate(config.tasks):
-            try:
-                data = next(tta_dataloader_iters[idx])
-            except StopIteration:
-                tta_dataloader_iters[idx] = iter(tta_dataloaders[idx])
-                data = next(tta_dataloader_iters[idx])
-            data = maybe_dictionarize(data)
-            x = data["images"].to(device)
-            outputs = adaptive_model(x, task)
+        if config.half_precision:
+            optimizer.zero_grad()
+            loss_dict = {}
+            losses = 0.0
+            losses_log = {}
+            with autocast(dtype = torch.bfloat16)
+                for idx, task in enumerate(config.tasks):
+                    try:
+                        data = next(tta_dataloader_iters[idx])
+                    except StopIteration:
+                        tta_dataloader_iters[idx] = iter(tta_dataloaders[idx])
+                        data = next(tta_dataloader_iters[idx])
+                    data = maybe_dictionarize(data)
+                    x = data["images"].to(device)
+                    outputs = adaptive_model(x, task)
+                    
+                    per_sample_loss = softmax_entropy(outputs).mean(dim=0) 
+                    loss = per_sample_loss
+                    
+                    loss_dict[task] = loss.item()
+                    losses += loss
+                    losses_log[f"Loss/Per-sample/{task}"] = per_sample_loss.item()
+                    losses_log[f"Loss/Total/{task}"] = loss.item()            
             
-            per_sample_loss = softmax_entropy(outputs).mean(dim=0) 
-            loss = per_sample_loss
+                avg_loss = losses.item() / len(config.tasks)
+                tqdm_iterator.set_description(
+                    f"TTA step: {step}, {loss_dict}, overall_loss: {avg_loss}"
+                )
+                
+                scaler.scale(losses).backward()
+                scaler.step(optimizer)
+                scaler.update()
             
-            loss_dict[task] = loss.item()
-            losses += loss
-            losses_log[f"Loss/Per-sample/{task}"] = per_sample_loss.item()
-            losses_log[f"Loss/Total/{task}"] = loss.item()            
-    
-        avg_loss = losses.item() / len(config.tasks)
-        tqdm_iterator.set_description(
-            f"TTA step: {step}, {loss_dict}, overall_loss: {avg_loss}"
-        )
+        else:
+            optimizer.zero_grad()
+            loss_dict = {}
+            losses = 0.0
+            losses_log = {}
+            for idx, task in enumerate(config.tasks):
+                try:
+                    data = next(tta_dataloader_iters[idx])
+                except StopIteration:
+                    tta_dataloader_iters[idx] = iter(tta_dataloaders[idx])
+                    data = next(tta_dataloader_iters[idx])
+                data = maybe_dictionarize(data)
+                x = data["images"].to(device)
+                outputs = adaptive_model(x, task)
+                
+                per_sample_loss = softmax_entropy(outputs).mean(dim=0) 
+                loss = per_sample_loss
+                
+                loss_dict[task] = loss.item()
+                losses += loss
+                losses_log[f"Loss/Per-sample/{task}"] = per_sample_loss.item()
+                losses_log[f"Loss/Total/{task}"] = loss.item()            
         
-        losses.backward()
-        optimizer.step()
+            avg_loss = losses.item() / len(config.tasks)
+            tqdm_iterator.set_description(
+                f"TTA step: {step}, {loss_dict}, overall_loss: {avg_loss}"
+            )
+            
+            losses.backward()
+            optimizer.step()
             
         if step % config.tta_eval_interval == 0:
             if step == 0:
