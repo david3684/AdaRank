@@ -31,8 +31,8 @@ Refer to [DARE](https://github.com/yule-BUAA/MergeLM) & [EMR-Merging](https://gi
 
 ### Checkpoints
 **Vision Experiments**:
-  - 8 Tasks: [ViT-B-32/ViT-B-32_TA](https://github.com/david3684/AdaRank/edit/main/README.md) / [ViT-L-14_TA](https://huggingface.co/JH-C-k/ViT-L-14_TA/tree/main)
-  - 14/20 Tasks:  [ViT-B-32/ViT-B-32](https://github.com/david3684/AdaRank/edit/main/README.md) / [ViT-L-14](https://huggingface.co/JH-C-k/ViT-L-14/tree/main)
+  - 8 Tasks: [ViT-B-32/ViT-B-32_TA](https://huggingface.co/JH-C-k/ViT-B-32/tree/main) / [ViT-L-14_TA](https://huggingface.co/JH-C-k/ViT-L-14_TA/tree/main)
+  - 14/20 Tasks:  [ViT-B-32/ViT-B-32](https://huggingface.co/JH-C-k/ViT-B-32/tree/main) / [ViT-L-14](https://huggingface.co/JH-C-k/ViT-L-14/tree/main)
   - Place your checkpoints as below:
 ```bash
 your_directory
