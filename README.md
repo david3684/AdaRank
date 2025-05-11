@@ -2,6 +2,10 @@
 This is the official repository for paper **[AdaRank: Adaptive Rank Pruning for Enhanced Model Merging](https://arxiv.org/abs/2503.22178).** 
 
 ![Image](https://github.com/user-attachments/assets/96fff66d-99d0-408a-a371-7fe309fab7a2)
+
+#### Updates
+**2025-04-30**: We share checkpoint links which depedencies are removed for vision tasks. Memory saving options for experiments are added.
+
 ## Abstract
 _Model merging has emerged as a promising approach for unifying independently fine-tuned models into an integrated framework, significantly enhancing computational efficiency in multi-task learning. Recently, several SVD-based techniques have been introduced to exploit low-rank structures for enhanced merging, but their reliance on such manually designed rank selection often leads to cross-task interference and suboptimal performance. In this paper, we propose **AdaRank**, a novel model merging framework that adaptively selects the most beneficial singular directions of task vectors to merge multiple models. We empirically show that the dominant singular components of task vectors can cause critical interference with other tasks, and that naive truncation across tasks and layers degrades performance. In contrast, AdaRank dynamically prunes the singular components that cause interference and offers an optimal amount of information to each task vector by learning to prune ranks during test-time via entropy minimization. Our analysis demonstrates that such method mitigates detrimental overlaps among tasks, while empirical results show that AdaRank consistently achieves state-of-the-art performance with various backbones and number of tasks, reducing the performance gap between fine-tuned models to nearly 1\%._
 
@@ -27,23 +31,26 @@ Refer to [DARE](https://github.com/yule-BUAA/MergeLM) & [EMR-Merging](https://gi
 
 ### Checkpoints
 **Vision Experiments**:
-  - 8 Tasks: Refer to [Editing Models with Task Arithmetic](https://github.com/mlfoundations/task_vectors).
-  - 14/20 Tasks: Refer to [TALL-Masks](https://github.com/nik-dim/tall_masks).
+  - 8 Tasks: [ViT-B-32/ViT-B-32_TA](https://huggingface.co/JH-C-k/ViT-B-32/tree/main) / [ViT-L-14_TA](https://huggingface.co/JH-C-k/ViT-L-14_TA/tree/main)
+  - 14/20 Tasks:  [ViT-B-32/ViT-B-32](https://huggingface.co/JH-C-k/ViT-B-32/tree/main) / [ViT-L-14](https://huggingface.co/JH-C-k/ViT-L-14/tree/main)
   - Place your checkpoints as below:
 ```bash
 your_directory
-├── ViT-B-32_TA # 8 task checkpoints from Task Arithmetic authors
-│   ├── cola
-│   ├── mnli
+├── ViT-B-32_TA # 8 task checkpoints 
+│   ├── Cars
+│   ├── DTD
 │   ├── ...
-├── ViT-B-32 # 20 task checkpoints from TALL_MASKS authors
-│    ├── gpt2_cola
-│    ├── gpt2_mnli
+├── ViT-B-32 # 20 task checkpoints 
+│    ├── Cars
+│    ├── DTD
+│    ├── ...
+│    ├── FER2013
 │    ├── ...
 ├── ViT-L-14_TA
 └── ViT-L-14
 ```
-  - Since checkpoints for 8 tasks (Cars, DTD, EuroSAT, SVHN, SUN397, MNIST, RESISC45, GTSRB) are differently finetuned from each source, we provide options for benchmarks. If you set `TA_MODE=True` in the exp config, it will automatically fetch 8 tasks checkpoints from `ViT-{B or L}-{32 or 14}_TA` folder and use them for 8 tasks evaluation. If you set `False`, all checkpoints from TALL-Masks are used.
+  - Checkpoints are modified from finetuned checkpoints from [Task Arithmetic](https://github.com/mlfoundations/task_vectors) (8 Tasks) and [TALL-Masks](https://github.com/nik-dim/tall_masks) (20 Tasks) with removing the directory dependence.
+  - Since checkpoints for 8 tasks and 20 tasks are differently finetuned, we provide options for benchmarks. If you set `TA_MODE=True` in the exp config, it will automatically fetch 8 tasks checkpoints from `ViT-{B or L}-{32 or 14}_TA` folder and use them for 8 tasks evaluation. If you set `False`, all checkpoints from TALL-Masks are used.
 
 **Language Models**:
   - RoBERTa: [vanillaOVO/roberta_base_glue_ckpts](https://huggingface.co/vanillaOVO/roberta_base_glue_ckpts/tree/main).
@@ -121,4 +128,3 @@ If you use this code in your research, we would be grateful to cite our paper:
 
 ## Acknowledgement
 This repository is built upon codebase of [Task Arithmetic](https://github.com/mlfoundations/task_vectors), [AdaMerging](https://github.com/EnnengYang/AdaMerging), and [EMR-Merging](https://github.com/harveyhuang18/EMR_Merging) (especially for language model experiments). Thanks to the authors for sharing their work.
-
